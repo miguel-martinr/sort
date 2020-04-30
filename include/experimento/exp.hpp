@@ -22,6 +22,7 @@
 #pragma once
 #include "Estadistica.hpp"
 #include "../DNI.hpp"
+#include "../ISBN.hpp" // Modificación
 #include "../sortMethods/sortMethods.hpp"
 
 #include <vector>
@@ -55,7 +56,7 @@ class exp {
    int nPruebas_;
    float alpha_;
    int mode_;
-   vector<vector<DNI>> banco_;
+   vector<vector<ISBN>> banco_;
    vector<Estadistica> est_;
 
 };
@@ -75,58 +76,58 @@ int exp::initBancos (void) {
   srand(banco_[0][0]);
   for (int i = 1; i < banco_.size(); i++) {
     for (int j = 0; j < banco_[i].size(); j++)
-      banco_[i][j] = DNI(rand() % 100000000);
+      banco_[i][j] = ISBN(rand() % 10000000000);
     srand(banco_[i][banco_[i].size()-1]);
   }
   return 0;
 }
 
 int exp::run(ostream &os) {
-  vector<vector<DNI>> bancoAux;
+  vector<vector<ISBN>> bancoAux;
 
     //Insertion
     est_[0].reset();
-    DNI::cmpCount_ = 0;
+    ISBN::cmpCount_ = 0;
     bancoAux = banco_;
     for (int j = 0; j < bancoAux.size(); j++) {
       insertionSort(bancoAux[j], mode_);
-      est_[0].update(DNI::cmpCount_);
+      est_[0].update(ISBN::cmpCount_);
     }
 
     //Bubble
     est_[1].reset();
-    DNI::cmpCount_ = 0;
+    ISBN::cmpCount_ = 0;
     bancoAux = banco_;
     for (int j = 0; j < bancoAux.size(); j++) {
       bubbleSort(bancoAux[j], mode_);
-      est_[1].update(DNI::cmpCount_);
+      est_[1].update(ISBN::cmpCount_);
     }
 
     //heap
     est_[2].reset();
-    DNI::cmpCount_ = 0;
+    ISBN::cmpCount_ = 0;
     bancoAux = banco_;
     for (int j = 0; j < bancoAux.size(); j++) {
       heapSort(bancoAux[j], mode_);
-      est_[2].update(DNI::cmpCount_);
+      est_[2].update(ISBN::cmpCount_);
     }
 
     //quick
     est_[3].reset();
-    DNI::cmpCount_ = 0;
+    ISBN::cmpCount_ = 0;
     bancoAux = banco_;
     for (int j = 0; j < bancoAux.size(); j++) {
       quickSort(bancoAux[j], 0, bancoAux[j].size()-1, mode_);
-      est_[3].update(DNI::cmpCount_);
+      est_[3].update(ISBN::cmpCount_);
     }
 
     //shell
     est_[4].reset();
-    DNI::cmpCount_ = 0;
+    ISBN::cmpCount_ = 0;
     bancoAux = banco_;
     for (int j = 0; j < bancoAux.size(); j++) {
       shellSort(alpha_, bancoAux[j], mode_);
-      est_[4].update(DNI::cmpCount_);
+      est_[4].update(ISBN::cmpCount_);
     }
     print(os);
   return 0;

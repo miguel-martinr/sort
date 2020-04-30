@@ -22,6 +22,7 @@
 #include "../include/sortMethods/sortMethods.hpp"
 #include "../include/experimento/exp.hpp"
 #include "../include/DNI.hpp"
+#include "../include/ISBN.hpp" //Modificación
 
 #include <iostream>
 #include <string>
@@ -32,12 +33,12 @@ using namespace std;
 
 
 void demoThis(int size, int id) {
-  vector<DNI> myV(size);
+  vector<ISBN> myV(size);
   float alpha = -1;
   srand(myV[0]);
   for (int i = 1; i < myV.size(); i++) {
     srand(myV[i-1]);
-    myV[i] = rand() % 100000000;
+    myV[i] = rand() % 10000000000;
   }
   switch (id) {
     case 1:
@@ -53,8 +54,8 @@ void demoThis(int size, int id) {
     case 3:
       cout << "HeapSort " << endl << endl;
       heapSort(myV, 0);
-      for (auto dni : myV)
-        cout << dni << " ";
+      for (auto ISBN : myV)
+        cout << ISBN << " ";
       cout << endl;
       break;
 
